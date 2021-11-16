@@ -1,0 +1,22 @@
+.descriptionBlock {
+    display: flex;
+    padding: 5px;
+}
+.ava {
+    width: 100px;
+    height: 100px;
+    margin-right: 20px;
+}
+.des {
+    padding: 0%;
+    list-style: none;
+}
+.des_item {
+    padding: 0px;
+    line-height: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.descriptionBlock a {
+    color: chocolate;
+}

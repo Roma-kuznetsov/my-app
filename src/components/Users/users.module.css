@@ -1,0 +1,21 @@
+.photouser {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+.bottom {
+  margin-bottom: 30px;
+}
+.flex {
+  display: flex;
+  justify-content: space-around;
+}
+.itemUser {
+  display: flex;
+  margin: 5%;
+}
+.selectedPage {
+  font-weight: 800;
+  margin-left: 10px;
+  margin-right: 10px;
+}
