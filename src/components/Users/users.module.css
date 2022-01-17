@@ -13,9 +13,22 @@
 .itemUser {
   display: flex;
   margin: 5%;
+  color: aliceblue;
 }
 .selectedPage {
   font-weight: 800;
   margin-left: 10px;
   margin-right: 10px;
+}
+.container{
+  margin: auto;
+}
+.pagerContainer{
+
+  display: flex;
+  max-width: 1000px;
+  justify-content: center;
+}
+.pager{
+  margin-top: 20px;
 }

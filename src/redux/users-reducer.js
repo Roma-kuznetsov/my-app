@@ -11,7 +11,7 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS';
 
 let initialState = {
     users: [],
-    pageSize: 5,
+    pageSize: 10,
     totalUsersCount: 0,
     currentPage: 1,
     isFaching: false,
@@ -23,7 +23,7 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW:
             return {
                 ...state,
-                //users: [...state.users],
+                //users: updateObjetInArray(state.users, action.userId, "id", {followed: true})
                 users: state.users.map(u => {
                     if (u.id === action.userId) {
                         return { ...u, followed: true }
@@ -34,7 +34,7 @@ const usersReducer = (state = initialState, action) => {
         case UNFOLLOW:
             return {
                 ...state,
-                //users: [...state.users],
+                //users: updateObjetInArray(state.users, action.userId, "id", {followed: false})
                 users: state.users.map(u => {
                     if (u.id === action.userId) {
                         return { ...u, followed: false }
@@ -85,39 +85,35 @@ export const toggleIsFaching = (isFaching) => ({ type: TOGGLE_IS_FACHING, isFach
 export const toggleIsFollowing = (isFaching, userId) => ({ type: TOGGLE_IS_FOLLOWING_PROGRESS, isFaching, userId })
 
 export const getUsers = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFaching(true));
-        userAPI.getUsers(currentPage, pageSize).then(data => {
+        let data = await userAPI.getUsers(currentPage, pageSize)
             dispatch(toggleIsFaching(false));
             dispatch(setUser(data.items));
             dispatch(setUsersTotalCount(data.totalCount));
             dispatch(setUserCurrent(currentPage))
-        })
     }
 }
 
+
+
+//Thunc group for update server status
+const followUnfollowFlow = async (dispatch,userId,apiMethod,actionCreater) =>{
+    dispatch(toggleIsFollowing(true, userId))
+    let response = await apiMethod(userId)
+            if (response.resultCode === 0) {
+                dispatch(actionCreater(userId))
+            }
+            dispatch(toggleIsFollowing(false, userId))
+}
 export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowing(true, userId))
-        userAPI.userFollow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(acceptUnfollow(userId))
-                }
-                dispatch(toggleIsFollowing(false, userId))
-            })
+    return async (dispatch) => {
+        followUnfollowFlow(dispatch,userId,userAPI.userFollow.bind(userAPI),acceptUnfollow)
     }
 }
 export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowing(true, userId))
-        userAPI.userUnfollow(userId)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(acceptFollow(userId))
-                }
-                dispatch(toggleIsFollowing(false, userId))
-            })
+    return async (dispatch) => {
+        followUnfollowFlow(dispatch,userId,userAPI.userUnfollow.bind(userAPI),acceptFollow)
     }
 }
 

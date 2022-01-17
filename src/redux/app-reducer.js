@@ -3,7 +3,6 @@ import { getUserData } from "./auth-reducer";
 
 
 const SET_INITIALAIZED = 'SET_INITIALAIZED'
-const kk = "111";
 
 
 let initialState = {
