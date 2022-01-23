@@ -19,7 +19,6 @@ class UsersAPIContainer extends React.Component {
     }
 
     render() {
-        debugger
         return <>
             {this.props.isFaching ? <Preloader /> : null}
             <Users totalUsersCount={this.props.totalUsersCount}

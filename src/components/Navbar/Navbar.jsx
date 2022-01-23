@@ -6,7 +6,7 @@ const Navbar = () => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
-                <NavLink to="/profile" activeClassName={s.activeLink}>Profile</NavLink>
+                <NavLink to="/profile" activeClassName={s.activeLink}>My profile</NavLink>
             </div>
             <div className={s.item}>
                 <NavLink to="/dialogs" activeClassName={s.activeLink}>Messages</NavLink>
@@ -21,7 +21,7 @@ const Navbar = () => {
                 <a href="*">Music</a>
             </div>
             <div className={s.item}>
-                <a href="*">Settings</a>
+                <NavLink to="/settings" activeClassName={s.activeLink}>Settings</NavLink>
             </div>
         </nav>
     )

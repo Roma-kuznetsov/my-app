@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { maxLenghtCreator, reqField } from '../../utils/validators/validator';
 import { Input } from '../common/FormsControl/Textarea';
-import { login, logout } from '../../redux/auth-reducer'
+import { login, logout} from '../../redux/auth-reducer'
 import { Redirect } from 'react-router';
 import s from "../common/FormsControl/Textarea.module.css"
 
@@ -11,6 +11,7 @@ import s from "../common/FormsControl/Textarea.module.css"
 let maxLenghtCreator40 = maxLenghtCreator(40)
 
 const LoginForm = (props) => {
+  debugger
   return (
     <form onSubmit={props.handleSubmit}>
       <div>
@@ -20,9 +21,12 @@ const LoginForm = (props) => {
         <Field component={Input} validate={[reqField, maxLenghtCreator40]} type={"password"} placeholder={"Password"} name={"password"} />
       </div>
       <div>
-        <Field component={Input} /*validate={[reqField, maxLenghtCreator40]}*/ type={'checkbox'} name={"rememberMe"} /> Remember me
+        <Field component={Input}  type={'checkbox'} name={"rememberMe"} /> Remember me
       </div>
       {props.error && <div className={s.formError}>Error login or password</div>}
+      {props.capthaImg && <img src={props.capthaImg}></img>}
+      {props.capthaImg && <div> <Field component={Input} validate={[reqField, maxLenghtCreator40]}
+        type={"text"} placeholder={"captcha"} name={"captcha"} /></div>}
       <div>
         <button>login</button>
       </div>
@@ -34,7 +38,7 @@ const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm)
 
 const Login = (props) => {
   const onSubmit = (formData) => {
-    props.login(formData.email, formData.password, formData.rememberMe)
+    props.login(formData.email, formData.password, formData.rememberMe , formData.captcha)
   }
 
   if (props.isAuth) {
@@ -43,11 +47,12 @@ const Login = (props) => {
 
   return <div>
     <h1>Login</h1>
-    <LoginReduxForm onSubmit={onSubmit} />
+    <LoginReduxForm onSubmit={onSubmit} capthaImg={props.capthaImg} />
   </div>
 }
 let mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  capthaImg: state.auth.capthaImg
 })
 
-export default connect(mapStateToProps, { login, logout })(Login);
+export default connect(mapStateToProps, { login, logout,})(Login);

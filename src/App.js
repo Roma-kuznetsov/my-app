@@ -34,8 +34,7 @@ class App extends Component {
                         <Route path="/dialogs" 
                             render={()=><DialogsContainer />}/>
                     </Suspense>
-                    <Route path='/profile/:userId?'
-                        render={() => <ProfileContainer />} />
+                    <Route path="/profile/:userId?" component={ProfileContainer} />
                     <Route path='/users'
                         render={() => <UsersContainer />} />
                     <Route path='/login'

@@ -1,15 +1,15 @@
 .descriptionBlock {
-    display: flex;
     padding: 5px;
 }
 .ava {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     margin-right: 20px;
 }
 .des {
     padding: 0%;
     list-style: none;
+    margin: 0%;
 }
 .des_item {
     padding: 0px;
@@ -19,4 +19,11 @@
 }
 .descriptionBlock a {
     color: chocolate;
+}
+/*display: flex;*/
+.mainBlock{
+    display: flex;
+}
+.title_contacts{
+    margin-bottom: 20px;
 }
