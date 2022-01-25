@@ -7,11 +7,11 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/login/Login';
 import { connect ,Provider} from 'react-redux';
 import { compose } from 'redux';
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 import { initializeApp } from './redux/app-reducer';
 import Preloader from './components/common/Preloader/Preloader';
 import store from "./redux/redux-store";
-import { BrowserRouter,Route} from "react-router-dom";
+import { BrowserRouter,Route,Switch} from "react-router-dom";
 //Ленивая загрузка
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
@@ -29,17 +29,20 @@ class App extends Component {
             <div className='app-wrapper' >
                 <HeaderContainer />
                 <Navbar />
+                <Switch>
                 <div className='app-wrapper-content'>
                     <Suspense fallback={<div>Загрузка...</div>}>
                         <Route path="/dialogs" 
                             render={()=><DialogsContainer />}/>
                     </Suspense>
+                    <Redirect from="/" to="/profile" />
                     <Route path="/profile/:userId?" component={ProfileContainer} />
                     <Route path='/users'
                         render={() => <UsersContainer />} />
                     <Route path='/login'
                         render={() => <Login />} />
                 </div>
+                </Switch>
             </div>
         )
     }
